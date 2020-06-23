@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spin-kube-deploy
+  namespace: default
+spec:
+  selector:
+    app: spin-kube-deploy
+  type: LoadBalancer
+  ports:
+    - name: canary
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
