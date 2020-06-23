@@ -1,0 +1,106 @@
+{
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "notifications": [
+    {
+      "address": "redace125@gmail.com",
+      "cc": "",
+      "level": "pipeline",
+      "type": "email",
+      "when": [
+        "pipeline.starting",
+        "pipeline.complete",
+        "pipeline.failed"
+      ]
+    }
+  ],
+  "parameterConfig": [],
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "expectedArtifacts": [
+        {
+          "defaultArtifact": {
+            "customKind": true,
+            "id": "eb41ab0c-de76-4a1b-bd4d-65c5eed0215e"
+          },
+          "displayName": "moody-insect-14",
+          "id": "e87d0707-9415-4e0b-89c2-1e15f90541c2",
+          "matchArtifact": {
+            "artifactAccount": "embedded-artifact",
+            "customKind": false,
+            "id": "af0b73b6-2c39-4751-b854-a0e324d62260",
+            "type": "embedded/base64"
+          },
+          "useDefaultArtifact": false,
+          "usePriorArtifact": false
+        }
+      ],
+      "inputArtifacts": [],
+      "isNew": true,
+      "name": "Bake (Manifest)",
+      "overrides": {},
+      "refId": "1",
+      "requisiteStageRefIds": [
+        "3"
+      ],
+      "sendNotifications": true,
+      "type": "bakeManifest"
+    },
+    {
+      "account": "my-k8s-account",
+      "cloudProvider": "kubernetes",
+      "isNew": true,
+      "manifestArtifact": null,
+      "manifestArtifactId": "a4daafe4-cbc1-434b-8d2e-21a62c8bea95",
+      "moniker": {
+        "app": "test"
+      },
+      "name": "Deploy (Manifest)",
+      "refId": "2",
+      "requisiteStageRefIds": [
+        "1"
+      ],
+      "skipExpressionEvaluation": false,
+      "source": "artifact",
+      "trafficManagement": {
+        "enabled": true,
+        "options": {
+          "enableTraffic": true,
+          "namespace": null,
+          "services": [],
+          "strategy": "redblack"
+        }
+      },
+      "type": "deployManifest"
+    },
+    {
+      "continuePipeline": false,
+      "failPipeline": true,
+      "isNew": true,
+      "name": "Jenkins-push",
+      "refId": "3",
+      "requisiteStageRefIds": [
+        "4"
+      ],
+      "type": "jenkins"
+    },
+    {
+      "continuePipeline": false,
+      "failPipeline": true,
+      "isNew": true,
+      "name": "Jenkins-build",
+      "refId": "4",
+      "requisiteStageRefIds": [],
+      "type": "jenkins"
+    }
+  ],
+  "triggers": [
+    {
+      "enabled": true,
+      "type": "docker"
+    }
+  ],
+  "updateTs": "1591312234000"
+}
